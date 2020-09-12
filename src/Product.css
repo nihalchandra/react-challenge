@@ -10,6 +10,7 @@
   min-width: 100px;
   background-color: white;
   z-index: 1;
+  transition: all 0.2s ease-in-out;
 }
 
 .product__rating {
@@ -18,7 +19,7 @@
 }
 
 .product > img {
-  max-height: 200px;
+  max-height: 150px;
   width: 100%;
   object-fit: contain;
   margin-bottom: 15px;
@@ -42,5 +43,6 @@
 }
 
 .product:hover {
-  box-shadow: 5px 5px 5px lightgray;
+  box-shadow: 5px 5px 5px 0px rgba(80, 85, 90, 0.88);
+  transform: scale(1.03);
 }

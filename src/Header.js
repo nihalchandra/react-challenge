@@ -5,12 +5,11 @@ import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { Link } from "react-router-dom";
 import { useStateValue } from "./StateProvider";
 import { auth } from "./firebase";
-import Login from "./Login";
 
 function Header() {
   const [{ basket, user }, dispatch] = useStateValue();
 
-  const handleAuthentication = () => {
+  const handleAuthenticaton = () => {
     if (user) {
       auth.signOut();
     }
@@ -22,7 +21,6 @@ function Header() {
         <img
           className="header__logo"
           src="http://pngimg.com/uploads/amazon/amazon_PNG11.png"
-          alt="logo"
         />
       </Link>
 
@@ -33,10 +31,9 @@ function Header() {
 
       <div className="header__nav">
         <Link to={!user && "/login"}>
-          <div onClick={handleAuthentication} className="header__option">
-            {/* user?.email || "guest" */}
+          <div onClick={handleAuthenticaton} className="header__option">
             <span className="header__optionLineOne">
-              Hello {user ? user?.email : "Guest"}
+              Hello {!user ? "Guest" : user.email}
             </span>
             <span className="header__optionLineTwo">
               {user ? "Sign Out" : "Sign In"}
@@ -47,24 +44,31 @@ function Header() {
         <Link to="/orders">
           <div className="header__option">
             <span className="header__optionLineOne">Returns</span>
-            <span className="header__optionLineTwo">Orders</span>
+            <span className="header__optionLineTwo">& Orders</span>
           </div>
         </Link>
 
         <div className="header__option">
           <span className="header__optionLineOne">Your</span>
-          <span className="header__optionLineTwo">Prime</span>
-        </div>
-      </div>
-
-      <Link to="/checkout">
-        <div className="header__optionBasket">
-          <ShoppingBasketIcon />
-          <span className="header_optionLineTwo header_basketCount">
-            {basket.length}
+          <span className="header__optionLineTwo">
+            <a
+              className="anchor__prime"
+              href="https://www.primevideo.com/?ref_=dvm_pds_amz_in_as_s_g_146|m_lgAX6a65c_c386629063424"
+            >
+              Prime
+            </a>
           </span>
         </div>
-      </Link>
+
+        <Link to="/checkout">
+          <div className="header__optionBasket">
+            <ShoppingBasketIcon />
+            <span className="header__optionLineTwo header__basketCount">
+              {basket?.length}
+            </span>
+          </div>
+        </Link>
+      </div>
     </div>
   );
 }
