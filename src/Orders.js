@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { db } from "./firebase";
 import "./Orders.css";
+import { db } from "./firebase";
 import { useStateValue } from "./StateProvider";
 import Order from "./Order";
+import NoItems from "./NoItems";
 
 function Orders() {
-  const [{ basket, user }, dispatch] = useStateValue();
+  const [{ user, basket }, dispatch] = useStateValue();
+
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
@@ -22,19 +24,21 @@ function Orders() {
             }))
           )
         );
-    } else {
-      setOrders([]);
     }
-  }, [user]);
-
+  }, []);
   return (
     <div className="orders">
-      <h1>Your Orders</h1>
-
+      <h1>Your orders</h1>
       <div className="orders__order">
-        {orders?.map((order) => (
-          <Order order={order} />
-        ))}
+        {user ? (
+          orders === [] ? (
+            <NoItems>Your orders will appear here</NoItems>
+          ) : (
+            orders?.map((order) => <Order order={order} />)
+          )
+        ) : (
+          <NoItems>Login to view orders</NoItems>
+        )}
       </div>
     </div>
   );

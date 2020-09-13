@@ -25,6 +25,10 @@
   flex: 0.2;
 }
 
+.payment__title > h3 {
+  color: #111;
+}
+
 .payment__address,
 .payment__item,
 .payment__details {
